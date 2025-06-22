@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Student = require('../models/Student');
+const Student = require('../models/Temp');
 
 
 // 📌 Create a student
