@@ -1,18 +1,17 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const studentSchema = new mongoose.Schema({
-  name: String,
-  studentID: String,
-  attendance: [
-    {
-      date: Date,
-      status: {
-        type: String,
-        enum: ['Present', 'Absent'],
-        default: 'Absent',
-      },
-    },
-  ],
+  name: {
+    type: String,
+    required: true,
+  },
+  studentID: {
+    type: String,
+    required: true,
+    unique: true,
+  }
+}, {
+  timestamps: true,
 });
 
-module.exports = mongoose.model('Student', studentSchema);
+module.exports = mongoose.model("Student", studentSchema);
