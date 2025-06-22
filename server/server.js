@@ -16,6 +16,11 @@ connectDB();
 // Routes
 app.use('/api/students', studentRoutes);
 
+app.get('/', (req, res) => {
+    res.send('API is working ✅');
+  });
+  
+
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
