@@ -3,6 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const studentRoutes = require('./routes/studentRoutes');
+const attendanceRoutes = require('./routes/attendanceRoutes');
+
 
 const app = express();
 
@@ -15,6 +17,8 @@ connectDB();
 
 // Routes
 app.use('/api/students', studentRoutes);
+app.use('/api/attendance', attendanceRoutes);
+
 
 app.get('/', (req, res) => {
     res.send('API is working ✅');
