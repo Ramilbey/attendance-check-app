@@ -25,26 +25,45 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/check", async (req, res) => {
-  const { name, studentID } = req.body;
-
-  try {
-    const student = await Student.findOne({ name, studentID });
-
-    if (!student) {
-      return res
-        .status(404)
-        .json({ message: "Student not found or credentials invalid" });
+router.post('/check', async (req, res) => {
+    const { name, studentID } = req.body;
+  
+    try {
+      const student = await Student.findOne({ name, studentID });
+  
+      if (!student) {
+        return res.status(404).json({ message: 'Student not found or credentials invalid' });
+      }
+  
+      const attendance = await Attendance.find({ studentId: student._id }).sort({ date: -1 });
+  
+      const total = attendance.length;
+      const present = attendance.filter((a) => a.status === 'Present').length;
+      const absent = total - present;
+      const percentage = total === 0 ? "0%" : `${Math.round((present / total) * 100)}%`;
+  
+      const absentDetails = attendance
+        .filter((a) => a.status === 'Absent')
+        .map((a) => ({
+          date: a.date.toISOString().split('T')[0],
+          lesson: a.lesson,
+        }));
+  
+      res.json({
+        summary: {
+          studentID: student.studentID,
+          name: student.name,
+          totalClasses: total,
+          present,
+          absent,
+          attendancePercentage: percentage,
+        },
+        absentDetails,
+      });
+    } catch (err) {
+      res.status(500).json({ message: 'Server error', error: err.message });
     }
-
-    const attendance = await Attendance.find({ studentId: student._id }).sort({
-      date: -1,
-    });
-
-    res.json({ attendance });
-  } catch (err) {
-    res.status(500).json({ message: "Server error", error: err.message });
-  }
-});
+  });
+  
 
 module.exports = router;

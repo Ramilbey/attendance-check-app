@@ -1,30 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 function StudentCheck() {
-  const [studentID, setStudentID] = useState('');
-  const [name, setName] = useState('');
+  const [studentID, setStudentID] = useState("");
+  const [name, setName] = useState("");
   const [attendance, setAttendance] = useState([]);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const fetchAttendance = async () => {
-    setError('');
+    setError("");
     setAttendance([]);
 
     try {
       const response = await fetch(`http://localhost:5000/api/students/check`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ studentID, name }), // ✅ Fixed key name
       });
 
       if (!response.ok) {
-        throw new Error('Student not found or incorrect credentials');
+        throw new Error("Student not found or incorrect credentials");
       }
 
       const data = await response.json();
       setAttendance(data.attendance);
+      console.log("ramilbey12");
     } catch (err) {
       setError(err.message);
     }
