@@ -1,14 +1,19 @@
 import React from "react";
-import StudentCheck from "./StudentCheck";
-import './App.css'
-
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import StudentCheck from "./pages/StudentCheck";
+import StudentDashboard from "./pages/StudentDashboard";
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="text-3xl font-bold text-center mb-6">🎓 Attendance Tracker</h1>
-      <StudentCheck />
-    </div>
+    <Router>
+      <div className="min-h-screen bg-gray-100 p-6">
+        <h1 className="text-3xl font-bold text-center mb-6">🎓 Attendance Tracker</h1>
+        <Routes>
+          <Route path="/" element={<StudentCheck />} />
+          <Route path="/dashboard" element={<StudentDashboard />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
