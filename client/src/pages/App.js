@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import StudentCheck from "./pages/StudentCheck";
-import StudentDashboard from "./pages/StudentDashboard";
+import StudentCheck from "./StudentCheck";
+import StudentDashboard from "./StudentDashboard";
 
 function App() {
   return (
