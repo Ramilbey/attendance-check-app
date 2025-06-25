@@ -3,20 +3,22 @@ import React, { useState } from "react";
 function StudentCheck() {
   const [studentID, setStudentID] = useState("");
   const [name, setName] = useState("");
-  const [attendance, setAttendance] = useState([]);
+  const [summary, setSummary] = useState(null);
+  const [absentDetails, setAbsentDetails] = useState([]);
   const [error, setError] = useState("");
 
   const fetchAttendance = async () => {
     setError("");
-    setAttendance([]);
+    setSummary(null);
+    setAbsentDetails([]);
 
     try {
-      const response = await fetch(`http://localhost:5000/api/students/check`, {
+      const response = await fetch("http://localhost:5000/api/students/check", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ studentID, name }), // ✅ Fixed key name
+        body: JSON.stringify({ studentID, name }),
       });
 
       if (!response.ok) {
@@ -24,8 +26,8 @@ function StudentCheck() {
       }
 
       const data = await response.json();
-      setAttendance(data.attendance);
-      console.log("ramilbey12");
+      setSummary(data.summary);
+      setAbsentDetails(data.absentDetails);
     } catch (err) {
       setError(err.message);
     }
@@ -56,16 +58,28 @@ function StudentCheck() {
 
       {error && <p className="text-red-500 mt-2">{error}</p>}
 
-      {attendance.length > 0 && (
-        <div className="mt-4">
-          <h2 className="text-xl font-bold mb-2">Attendance Records</h2>
-          <ul>
-            {attendance.map((record) => (
-              <li key={record._id}>
-                {new Date(record.date).toLocaleDateString()} - {record.status}
-              </li>
-            ))}
-          </ul>
+      {summary && (
+        <div className="mt-4 bg-gray-50 p-4 rounded shadow">
+          <h2 className="text-xl font-bold mb-2">📊 Attendance Summary</h2>
+          <p><strong>Name:</strong> {summary.name}</p>
+          <p><strong>Student ID:</strong> {summary.studentID}</p>
+          <p><strong>Total Classes:</strong> {summary.totalClasses}</p>
+          <p><strong>Present:</strong> {summary.present}</p>
+          <p><strong>Absent:</strong> {summary.absent}</p>
+          <p><strong>Attendance %:</strong> {summary.attendancePercentage}</p>
+
+          {absentDetails.length > 0 && (
+            <div className="mt-4">
+              <h3 className="font-semibold">📅 Missed Lessons</h3>
+              <ul className="list-disc list-inside">
+                {absentDetails.map((item, idx) => (
+                  <li key={idx}>
+                    {new Date(item.date).toLocaleDateString()} - {item.lesson}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       )}
     </div>
