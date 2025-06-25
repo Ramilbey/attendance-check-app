@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./StudentCheck.css"; // 
 
 function StudentCheck() {
   const [studentID, setStudentID] = useState("");
@@ -9,7 +10,6 @@ function StudentCheck() {
 
   const fetchAttendance = async () => {
     setError("");
-
     try {
       const response = await fetch("http://localhost:5000/api/students/check", {
         method: "POST",
@@ -19,12 +19,9 @@ function StudentCheck() {
         body: JSON.stringify({ studentID, name }),
       });
 
-      if (!response.ok) {
-        throw new Error("Student not found or incorrect credentials");
-      }
+      if (!response.ok) throw new Error("Student not found or incorrect credentials");
 
       const data = await response.json();
-      // Redirect to dashboard with attendance data
       navigate("/dashboard", { state: data });
     } catch (err) {
       setError(err.message);
@@ -32,29 +29,31 @@ function StudentCheck() {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white p-4 rounded shadow">
-      <input
-        type="text"
-        placeholder="Enter Student ID"
-        value={studentID}
-        onChange={(e) => setStudentID(e.target.value)}
-        className="w-full p-2 mb-2 border rounded"
-      />
-      <input
-        type="text"
-        placeholder="Enter Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        className="w-full p-2 mb-2 border rounded"
-      />
-      <button
-        onClick={fetchAttendance}
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full"
-      >
-        Check Attendance
-      </button>
+    <div className="page-container">
+      <div className="check-card">
+        <h1 className="check-title">XMUM Attendance Portal</h1>
 
-      {error && <p className="text-red-500 mt-2">{error}</p>}
+        <input
+          type="text"
+          placeholder="Student ID"
+          value={studentID}
+          onChange={(e) => setStudentID(e.target.value)}
+          className="check-input"
+        />
+        <input
+          type="text"
+          placeholder="Student Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="check-input"
+        />
+
+        <button onClick={fetchAttendance} className="check-button">
+          View Attendance
+        </button>
+
+        {error && <p className="error-text">{error}</p>}
+      </div>
     </div>
   );
 }

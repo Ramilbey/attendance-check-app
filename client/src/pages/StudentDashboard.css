@@ -1,0 +1,78 @@
+.dashboard-container {
+    max-width: 768px;
+    margin: 0 auto;
+    padding: 1rem;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .dashboard-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    color: #003366;
+    text-align: center;
+  }
+  
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .dashboard-card {
+    background: #ffffff;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  }
+  
+  .present-card {
+    background-color: #e6f4ea;
+  }
+  
+  .absent-card {
+    background-color: #fdecea;
+  }
+  
+  .dashboard-label {
+    color: #555;
+    font-size: 15px;
+    margin-bottom: 0.25rem;
+  }
+  
+  .dashboard-value {
+    font-size: 22px;
+    font-weight: 600;
+  }
+  
+  .dashboard-value-sm {
+    font-size: 18px;
+  }
+  
+  .chart-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #222;
+  }
+  
+  .absent-list {
+    list-style-type: disc;
+    padding-left: 1.25rem;
+    margin-top: 0.5rem;
+    line-height: 1.6;
+  }
+  
+  .no-absences {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .no-data-message {
+    text-align: center;
+    margin-top: 3rem;
+    font-size: 16px;
+    color: #666;
+  }
+  
