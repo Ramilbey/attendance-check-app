@@ -1,23 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useLocation } from "react-router-dom";
-import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
 import "./StudentDashboard.css";
 
-const COLORS = ["#4cc9f0", "#f72585"];
+const COLORS = ["#10b981", "#e5e7eb"];
 
 function StudentDashboard() {
   const location = useLocation();
-  const { summary, presentDetails, absentDetails } = location.state || {};
-  const [openSection, setOpenSection] = useState({
-    present: true,
-    absent: true
-  });
+  const { summary, presentDetails = [], absentDetails = [] } = location.state || {};
+  const [openSection, setOpenSection] = useState({ present: true, absent: true });
 
   const toggleSection = (section) => {
-    setOpenSection(prev => ({
-      ...prev,
-      [section]: !prev[section]
-    }));
+    setOpenSection(prev => ({ ...prev, [section]: !prev[section] }));
   };
 
   if (!summary) return <p className="dashboard-message">No data found. Please login again.</p>;
@@ -27,18 +21,44 @@ function StudentDashboard() {
     { name: "Absent", value: summary.absent },
   ];
 
+  const weeklyTrend = [
+    { week: "Week 1", present: 4, absent: 1 },
+    { week: "Week 2", present: 3, absent: 2 },
+    { week: "Week 3", present: 5, absent: 0 },
+    { week: "Week 4", present: 4, absent: 1 },
+  ];
+
+  const trendChange = weeklyTrend.length >= 2
+    ? weeklyTrend[weeklyTrend.length - 1].absent - weeklyTrend[weeklyTrend.length - 2].absent
+    : 0;
+
+  const trendText = trendChange < 0
+    ? `📈 Attendance improved: ${Math.abs(trendChange)} fewer absents`
+    : trendChange > 0
+    ? `📉 ${trendChange} more absents than last week`
+    : `➖ No change in attendance`;
+
   return (
     <div className="dashboard-container">
-      <h1 className="dashboard-title">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M12 8V12L15 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-        Attendance Dashboard
-      </h1>
-      <p className="dashboard-subtitle">Track your academic progress and attendance</p>
+      {/* Student Info Header */}
+      <div className="student-info-card">
+        <div className="student-avatar">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
+        <div className="student-details">
+          <h1>{summary.name}</h1>
+          <p className="student-id">ID: {summary.studentID}</p>
+          <div className={`attendance-status ${summary.attendancePercentage >= 75 ? 'good' : 'warning'}`}>
+            {summary.attendancePercentage >= 75 ? 'Good Standing' : 'Needs Improvement'}
+          </div>
+        </div>
+      </div>
 
-      <div className="dashboard-grid">
+      {/* Stats Grid */}
+      <div className="stats-grid">
         <div className="stat-box">
           <span>Total Classes</span>
           <strong>{summary.totalClasses}</strong>
@@ -57,155 +77,91 @@ function StudentDashboard() {
         </div>
       </div>
 
-      <div className="chart-section">
-        <h2>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M18 20V10M12 20V4M6 20V14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-          Attendance Overview
-        </h2>
-        <div className="chart-container">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={chartData}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={120}
-                innerRadius={70}
-                paddingAngle={3}
-                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-              >
-                {chartData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index]} />
-                ))}
-              </Pie>
-              <Tooltip 
-                formatter={(value, name) => [`${value} classes`, name]}
-                contentStyle={{
-                  borderRadius: '12px',
-                  border: 'none',
-                  boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
-                  backgroundColor: 'rgba(255,255,255,0.95)',
-                  backdropFilter: 'blur(10px)'
-                }}
-              />
-              <Legend 
-                iconType="circle"
-                layout="horizontal"
-                verticalAlign="bottom"
-                align="center"
-                wrapperStyle={{ paddingTop: '20px' }}
-              />
-            </PieChart>
-          </ResponsiveContainer>
+      {/* Charts Grid - Side by Side */}
+      <div className="charts-container">
+        {/* Attendance Overview */}
+        <div className="chart-card">
+          <h2>Attendance Overview</h2>
+          <div className="chart-wrapper">
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={chartData}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={100}
+                  innerRadius={60}
+                  paddingAngle={3}
+                >
+                  {chartData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index]} />
+                  ))}
+                </Pie>
+                <Tooltip formatter={(value, name) => [`${value} classes`, name]} />
+                <Legend layout="horizontal" verticalAlign="bottom" align="center" />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Weekly Trend */}
+        <div className="chart-card">
+          <h2>Weekly Attendance Trend</h2>
+          <p className="trend-text">{trendText}</p>
+          <div className="chart-wrapper">
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={weeklyTrend} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis dataKey="week" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="present" fill="#10b981" name="Present" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="absent" fill="#9ca3af" name="Absent" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         </div>
       </div>
 
-      <div className="data-sections-grid">
-        <div className="list-section">
-          <h2 onClick={() => toggleSection('present')}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.709 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4881 2.02168 11.3363C2.16356 9.18455 2.99721 7.13631 4.39828 5.49706C5.79935 3.85781 7.69279 2.71537 9.79619 2.24013C11.8996 1.7649 14.1003 1.98232 16.07 2.86" stroke="#4cc9f0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M22 4L12 14.01L9 11.01" stroke="#4cc9f0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            Present Lessons ({presentDetails?.length || 0})
-            <span style={{ marginLeft: 'auto' }}>
-              {openSection.present ? '▼' : '▶'}
-            </span>
-          </h2>
-          <div 
-            className="collapsible-content"
-            style={{
-              maxHeight: openSection.present ? '1000px' : '0',
-              opacity: openSection.present ? 1 : 0
-            }}
-            data-state={openSection.present ? "open" : "closed"}
-          >
-            {presentDetails?.length === 0 ? (
-              <p style={{ padding: '2rem', color: 'var(--gray)', textAlign: 'center' }}>No presents recorded.</p>
-            ) : (
-              <div className="table-container">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Lesson</th>
-                      <th>Date</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {presentDetails?.map((item, index) => (
-                      <tr key={index}>
-                        <td>{item.lesson}</td>
-                        <td>{new Date(item.date).toLocaleString('en-US', {
-                          month: 'short',
-                          day: 'numeric',
-                          year: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit'
-                        })}</td>
-                        <td><span className="status-badge badge-present">Present</span></td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
+      {/* Lessons Grid - Side by Side */}
+      <div className="lessons-container">
+        {/* Present Lessons */}
+        <div className="lessons-card">
+          <div className="lessons-header" onClick={() => toggleSection('present')}>
+            <h3>Present Lessons ({presentDetails.length})</h3>
+            <span>{openSection.present ? '▼' : '▶'}</span>
           </div>
+          {openSection.present && (
+            <div className="lessons-list">
+              {presentDetails.map((lesson, index) => (
+                <div key={`present-${index}`} className="lesson-item">
+                  <span className="lesson-date">{lesson.date}</span>
+                  <span className="lesson-subject">{lesson.subject}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
-        <div className="list-section">
-          <h2 onClick={() => toggleSection('absent')}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M18 6L6 18M6 6L18 18" stroke="#f72585" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            Absent Lessons ({absentDetails?.length || 0})
-            <span style={{ marginLeft: 'auto' }}>
-              {openSection.absent ? '▼' : '▶'}
-            </span>
-          </h2>
-          <div 
-            className="collapsible-content"
-            style={{
-              maxHeight: openSection.absent ? '1000px' : '0',
-              opacity: openSection.absent ? 1 : 0
-            }}
-            data-state={openSection.absent ? "open" : "closed"}
-          >
-            {absentDetails?.length === 0 ? (
-              <p style={{ padding: '2rem', color: 'var(--gray)', textAlign: 'center' }}>No absences 🎉</p>
-            ) : (
-              <div className="table-container">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Lesson</th>
-                      <th>Date</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {absentDetails?.map((item, index) => (
-                      <tr key={index}>
-                        <td>{item.lesson}</td>
-                        <td>{new Date(item.date).toLocaleString('en-US', {
-                          month: 'short',
-                          day: 'numeric',
-                          year: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit'
-                        })}</td>
-                        <td><span className="status-badge badge-absent">Absent</span></td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
+        {/* Absent Lessons */}
+        <div className="lessons-card">
+          <div className="lessons-header" onClick={() => toggleSection('absent')}>
+            <h3>Absent Lessons ({absentDetails.length})</h3>
+            <span>{openSection.absent ? '▼' : '▶'}</span>
           </div>
+          {openSection.absent && (
+            <div className="lessons-list">
+              {absentDetails.map((lesson, index) => (
+                <div key={`absent-${index}`} className="lesson-item">
+                  <span className="lesson-date">{lesson.date}</span>
+                  <span className="lesson-subject">{lesson.subject}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
