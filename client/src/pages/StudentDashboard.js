@@ -9,6 +9,7 @@ function StudentDashboard() {
   const location = useLocation();
   const { summary, presentDetails = [], absentDetails = [] } = location.state || {};
   const [openSection, setOpenSection] = useState({ present: true, absent: true });
+  const [animateIn, setAnimateIn] = useState(false);
 
   const toggleSection = (section) => {
     setOpenSection(prev => ({ ...prev, [section]: !prev[section] }));
