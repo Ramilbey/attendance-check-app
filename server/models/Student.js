@@ -12,6 +12,15 @@ const studentSchema = new mongoose.Schema({
     unique: true,
     trim: true
   },
+  cgpa: {
+    type: Number,
+    default: 0.0
+  },
+  country: {
+    type: String,
+    default: "Malaysia"
+  },
+  
   // Make all other fields optional
   advisor: {
     type: String,

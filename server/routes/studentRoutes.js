@@ -36,7 +36,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// 📌 Get all students (lightweight)
+// 📌 Get all students (lightweight version)
 router.get("/", async (req, res) => {
   try {
     const students = await Student.find()
@@ -48,16 +48,17 @@ router.get("/", async (req, res) => {
   }
 });
 
-// 📌 Get complete student profile
-// Get student profile (simplified)
+// 📌 Get full student profile
 router.get("/:studentID/profile", async (req, res) => {
   try {
     const student = await Student.findOne({ studentID: req.params.studentID })
-      .select('-__v -createdAt -updatedAt -attendance');
+      .select('studentID name email program batch yearOfStudy contactNumber emergencyContact advisor cgpa country')
+      .lean();
 
     if (!student) {
       return res.status(404).json({ error: 'Student not found' });
     }
+
     res.json(student);
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
@@ -69,7 +70,7 @@ router.patch("/:studentID/profile", async (req, res) => {
   try {
     const updates = Object.keys(req.body);
     const allowedUpdates = ['name', 'email', 'yearOfStudy', 'program', 'batch', 
-                           'contactNumber', 'emergencyContact', 'advisor', 'cgpa'];
+                            'contactNumber', 'emergencyContact', 'advisor', 'cgpa', 'country'];
     const isValidOperation = updates.every(update => allowedUpdates.includes(update));
 
     if (!isValidOperation) {
@@ -85,6 +86,7 @@ router.patch("/:studentID/profile", async (req, res) => {
     if (!student) {
       return handleError(res, 404, "Student not found");
     }
+
     res.json(student);
   } catch (err) {
     handleError(res, 400, err.message);
@@ -92,10 +94,10 @@ router.patch("/:studentID/profile", async (req, res) => {
 });
 
 // 📌 Student attendance check
-router.post('/check', async (req, res) => {
+router.post("/check", async (req, res) => {
   try {
     const { name, studentID } = req.body;
-    
+
     if (!name || !studentID) {
       return handleError(res, 400, "Name and Student ID are required");
     }
