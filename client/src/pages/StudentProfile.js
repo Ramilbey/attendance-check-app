@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import "./StudentProfile.css";
 
-function StudentProfile() {
+const StudentProfile = () => {
   const { studentID } = useParams();
   const navigate = useNavigate();
   const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [activeTab, setActiveTab] = useState("personal");
 
   useEffect(() => {
     const fetchStudent = async () => {
@@ -28,114 +30,197 @@ function StudentProfile() {
     fetchStudent();
   }, [studentID]);
 
-  if (loading) return <div className="profile-container loading-spinner"></div>;
-  if (error)
-    return (
-      <div className="profile-container">
-        <div className="error-card">
-          <p>{error}</p>
-          <button onClick={() => navigate(-1)} className="back-button">
-            ← Go Back
-          </button>
-        </div>
-      </div>
-    );
-  if (!student)
-    return (
-      <div className="profile-container">
-        <div className="empty-state">
-          <p>No student data found</p>
-          <button onClick={() => navigate("/dashboard")} className="back-button">
-            ← Back to Dashboard
-          </button>
-        </div>
-      </div>
-    );
+  if (loading) return <LoadingState />;
+  if (error) return <ErrorState error={error} navigate={navigate} />;
+  if (!student) return <EmptyState navigate={navigate} />;
 
   return (
-    <div className="profile-container">
-      <button onClick={() => navigate(-1)} className="back-button">
-        ← Back
-      </button>
+    <motion.div 
+      className="profile-container"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      <HeaderSection student={student} navigate={navigate} />
+      
+      <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
+      
+      <AnimatePresence mode="wait">
+        <ContentSection 
+          activeTab={activeTab} 
+          student={student} 
+          key={activeTab} 
+        />
+      </AnimatePresence>
+    </motion.div>
+  );
+};
 
-      <div className="profile-header">
-        <div className="profile-avatar">
-          {student.avatar ? (
-            <img src={student.avatar} alt={student.name} />
-          ) : (
-            <div className="avatar-placeholder">
-              {student.name.charAt(0).toUpperCase()}
-            </div>
-          )}
-        </div>
-        <div className="profile-title">
-          <h1>{student.name}</h1>
-          <p className="student-id">ID: {student.studentID}</p>
-          <div className="profile-badge">{student.program}</div>
-        </div>
-      </div>
+// Sub-Components for Perfect Organization
+const LoadingState = () => (
+  <div className="profile-container">
+    <div className="loading-animation">
+      <div className="spinner"></div>
+      <p>Loading Student Profile...</p>
+    </div>
+  </div>
+);
 
-      <div className="profile-content">
-        <div className="profile-section personal-info">
-          <h2>
-            <span className="section-icon">👤</span>
-            Personal Information
-          </h2>
-          <div className="info-grid">
-            <div className="info-item">
-              <span className="info-label">Email</span>
-              <p className="info-value">
-                <a href={`mailto:${student.email}`}>{student.email}</a>
-              </p>
-            </div>
-            <div className="info-item">
-              <span className="info-label">Country</span>
-              <p className="info-value">{student.country}</p>
-            </div>
-            <div className="info-item">
-              <span className="info-label">Contact Number</span>
-              <p className="info-value">
-                <a href={`tel:${student.contactNumber}`}>{student.contactNumber}</a>
-              </p>
-            </div>
-            <div className="info-item">
-              <span className="info-label">Emergency Contact</span>
-              <p className="info-value">{student.emergencyContact}</p>
-            </div>
+const ErrorState = ({ error, navigate }) => (
+  <motion.div
+    className="profile-container"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+  >
+    <div className="error-card">
+      <div className="error-icon">⚠️</div>
+      <h3>Error Loading Profile</h3>
+      <p>{error}</p>
+      <motion.button
+        onClick={() => navigate(-1)}
+        className="back-button"
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.97 }}
+      >
+        ← Return to Previous Page
+      </motion.button>
+    </div>
+  </motion.div>
+);
+
+const EmptyState = ({ navigate }) => (
+  <div className="profile-container">
+    <div className="empty-state">
+      <h3>Profile Not Found</h3>
+      <p>The requested student profile doesn't exist</p>
+      <motion.button
+        onClick={() => navigate("/dashboard")}
+        className="back-button"
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.97 }}
+      >
+        ← Back to Dashboard
+      </motion.button>
+    </div>
+  </div>
+);
+
+const HeaderSection = ({ student, navigate }) => (
+  <header className="profile-header">
+    <motion.button
+      onClick={() => navigate(-1)}
+      className="back-button"
+      whileHover={{ x: -3 }}
+      whileTap={{ scale: 0.97 }}
+    >
+      ← Back
+    </motion.button>
+    
+    <div className="avatar-title-group">
+      <motion.div 
+        className="profile-avatar"
+        whileHover={{ rotate: 5 }}
+      >
+        {student.avatar ? (
+          <img src={student.avatar} alt={student.name} />
+        ) : (
+          <div className="avatar-placeholder">
+            {student.name.charAt(0).toUpperCase()}
           </div>
-        </div>
-
-        <div className="profile-section academic-info">
-          <h2>
-            <span className="section-icon">🎓</span>
-            Academic Information
-          </h2>
-          <div className="info-grid">
-            <div className="info-item">
-              <span className="info-label">Program</span>
-              <p className="info-value">{student.program}</p>
-            </div>
-            <div className="info-item">
-              <span className="info-label">Batch</span>
-              <p className="info-value">{student.batch}</p>
-            </div>
-            <div className="info-item">
-              <span className="info-label">Year of Study</span>
-              <p className="info-value">{student.yearOfStudy}</p>
-            </div>
-            <div className="info-item">
-              <span className="info-label">Advisor</span>
-              <p className="info-value">{student.advisor}</p>
-            </div>
-            <div className="info-item highlight">
-              <span className="info-label">CGPA</span>
-              <p className="info-value">{student.cgpa ?? "Not available"}</p>
-            </div>
-          </div>
-        </div>
+        )}
+      </motion.div>
+      
+      <div className="title-group">
+        <motion.h1
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+        >
+          {student.name}
+        </motion.h1>
+        <p className="student-id">ID: {student.studentID}</p>
       </div>
     </div>
+    
+    <motion.div 
+      className="profile-badge"
+      whileHover={{ scale: 1.05 }}
+    >
+      {student.program}
+    </motion.div>
+  </header>
+);
+
+const TabNavigation = ({ activeTab, setActiveTab }) => (
+  <nav className="tab-navigation">
+    {["personal", "academic"].map((tab) => (
+      <motion.button
+        key={tab}
+        className={`tab-btn ${activeTab === tab ? "active" : ""}`}
+        onClick={() => setActiveTab(tab)}
+        whileHover={{ y: -2 }}
+        whileTap={{ scale: 0.98 }}
+      >
+        {tab === "personal" ? "👤 Personal" : "🎓 Academic"}
+      </motion.button>
+    ))}
+  </nav>
+);
+
+const ContentSection = ({ activeTab, student }) => {
+  const personalInfo = [
+    { label: "Email", value: student.email, isLink: true },
+    { label: "Country", value: student.country },
+    { label: "Contact", value: student.contactNumber, isLink: true },
+    { label: "Emergency", value: student.emergencyContact }
+  ];
+
+  const academicInfo = [
+    { label: "Program", value: student.program },
+    { label: "Batch", value: student.batch },
+    { label: "Year", value: student.yearOfStudy },
+    { label: "Advisor", value: student.advisor },
+    { label: "CGPA", value: student.cgpa ?? "N/A", isHighlight: true }
+  ];
+
+  return (
+    <motion.section
+      className={`profile-section ${activeTab}-info`}
+      initial={{ opacity: 0, x: activeTab === "personal" ? -20 : 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: activeTab === "personal" ? 20 : -20 }}
+      transition={{ duration: 0.3 }}
+    >
+      <h2>
+        {activeTab === "personal" ? "Personal Information" : "Academic Information"}
+      </h2>
+      
+      <div className="info-grid">
+        {(activeTab === "personal" ? personalInfo : academicInfo).map((item) => (
+          <InfoItem key={item.label} {...item} />
+        ))}
+      </div>
+    </motion.section>
   );
-}
+};
+
+const InfoItem = ({ label, value, isLink = false, isHighlight = false }) => (
+  <motion.div
+    className={`info-item ${isHighlight ? "highlight" : ""}`}
+    whileHover={{ y: -3 }}
+    transition={{ type: "spring", stiffness: 400 }}
+  >
+    <span className="info-label">{label}</span>
+    <p className="info-value">
+      {isLink ? (
+        <a href={label === "Email" ? `mailto:${value}` : `tel:${value}`}>
+          {value}
+        </a>
+      ) : (
+        value
+      )}
+    </p>
+  </motion.div>
+);
 
 export default StudentProfile;

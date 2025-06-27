@@ -1,192 +1,261 @@
 :root {
-    --deep-green: #2a5c45;
-    --soft-green: #8ba888;
-    --light-green: #e8f3e8;
-    --warm-gray: #5a5a5a;
-    --light-gray: #f5f5f5;
-    --dark-gray: #2a2a2a;
-    --accent-red: #c45c4c;
-    --border-radius: 12px;
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
-    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+    /* Ultimate Color Palette */
+    --deep-forest: #0a291a;
+    --gold-accent: #d4a017;
+    --moss-green: #6b8e23;
+    --ivory-white: #fffff5;
+    --slate-dark: #1a1f24;
+    --mist-white: rgba(255, 255, 255, 0.85);
+    
+    /* Depth & Shadows */
+    --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
+    --shadow-hard: 0 8px 30px rgba(0, 0, 0, 0.12);
+    --inner-glow: inset 0 1px 2px rgba(255, 255, 255, 0.15);
+    
+    /* Glass Effects */
+    --glass-bg: rgba(255, 255, 255, 0.18);
+    --glass-border: rgba(255, 255, 255, 0.25);
+    
+    /* Animation */
+    --transition-bounce: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+    --transition-smooth: cubic-bezier(0.33, 1, 0.68, 1);
   }
   
+  /* Base Styles */
   body {
-    background-color: #f9f9f7;
-    font-family: "Inter", sans-serif;
-    color: var(--dark-gray);
+    background: linear-gradient(135deg, #f0f5f0 0%, #e0e8e0 100%);
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--slate-dark);
     line-height: 1.6;
-    padding: 20px;
+    padding: 2rem;
+    min-height: 100vh;
   }
   
-  /* Main Container */
+  /* Ultimate Container */
   .profile-container {
     max-width: 1200px;
     margin: 2rem auto;
-    padding: 2.5rem;
-    background: white;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow-md);
-    position: relative;
+    padding: 3rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 28px;
+    box-shadow: var(--shadow-hard), var(--inner-glow);
+    border: 1px solid var(--glass-border);
     overflow: hidden;
-    border: 1px solid rgba(0, 0, 0, 0.05);
   }
   
-  /* Loading Spinner */
-  .loading-spinner {
+  /* Loading Animation */
+  .loading-animation {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    align-items: center;
-    height: 200px;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50"><path fill="%232a5c45" d="M25,5A20,20 0 1,1 5,25" opacity="0.3"><animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s" repeatCount="indefinite"/></path></svg>') no-repeat center;
+    height: 50vh;
   }
   
-  /* Back Button (Minimalist) */
-  .back-button {
-    background: none;
-    border: none;
-    color: var(--deep-green);
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    margin-bottom: 2rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.2s ease;
-    padding: 8px 0;
+  .spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(10, 41, 26, 0.1);
+    border-top-color: var(--deep-forest);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1.5rem;
   }
   
-  .back-button:hover {
-    color: var(--accent-red);
+  @keyframes spin {
+    to { transform: rotate(360deg); }
   }
   
-  /* Header Section */
+  /* Header - Perfectly Arranged */
   .profile-header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 2rem;
+    padding-bottom: 2.5rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+  
+  .profile-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, 
+      transparent, 
+      rgba(0, 0, 0, 0.08), 
+      transparent);
+  }
+  
+  .avatar-title-group {
     display: flex;
     align-items: center;
-    gap: 2.5rem;
-    padding-bottom: 2rem;
-    margin-bottom: 2rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    gap: 2rem;
   }
   
   .profile-avatar {
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    background: var(--light-green);
-    border: 4px solid var(--soft-green);
+    background: linear-gradient(135deg, var(--deep-forest), var(--moss-green));
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-soft);
+    border: 3px solid rgba(255, 255, 255, 0.2);
   }
   
   .avatar-placeholder {
-    font-size: 3rem;
+    font-size: 3.5rem;
     font-weight: bold;
-    color: var(--deep-green);
+    color: white;
   }
   
-  .profile-title h1 {
+  .title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .title-group h1 {
     margin: 0;
-    font-size: 2.4rem;
+    font-size: 2.5rem;
     font-weight: 700;
-    color: var(--deep-green);
+    color: var(--deep-forest);
+    line-height: 1.2;
   }
   
   .student-id {
-    font-size: 1rem;
-    color: var(--warm-gray);
-    margin: 0.5rem 0 1rem;
+    font-size: 1.1rem;
+    color: var(--moss-green);
+    font-weight: 500;
   }
   
   .profile-badge {
-    display: inline-block;
-    background: var(--light-green);
-    color: var(--deep-green);
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.85rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 100px;
+    background: linear-gradient(135deg, var(--deep-forest), var(--moss-green));
+    color: white;
     font-weight: 600;
-    letter-spacing: 0.5px;
+    font-size: 0.95rem;
+    box-shadow: var(--shadow-soft);
+    white-space: nowrap;
   }
   
-  /* Content Grid */
-  .profile-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+  /* Tab Navigation - Perfect Toggle */
+  .tab-navigation {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
   }
   
-  /* Sections (Elegant Cards) */
+  .tab-btn {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.3);
+    color: var(--slate-dark);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s var(--transition-smooth);
+  }
+  
+  .tab-btn.active {
+    background: linear-gradient(135deg, var(--deep-forest), var(--moss-green));
+    color: white;
+    box-shadow: 0 4px 15px rgba(10, 41, 26, 0.2);
+  }
+  
+  /* Sections - Masterful Layout */
   .profile-section {
-    background: white;
-    border-radius: var(--border-radius);
-    padding: 2rem;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
-    box-shadow: var(--shadow-sm);
-  }
-  
-  .profile-section:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  }
-  
-  .personal-info {
-    border-top: 4px solid var(--soft-green);
-  }
-  
-  .academic-info {
-    border-top: 4px solid var(--accent-red);
+    padding: 2.5rem;
+    border-radius: 20px;
+    background: var(--mist-white);
+    box-shadow: var(--shadow-soft);
+    margin-bottom: 2rem;
   }
   
   .profile-section h2 {
-    margin: 0 0 1.5rem 0;
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: var(--deep-green);
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    margin-top: 0;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    color: var(--deep-forest);
+    position: relative;
+    padding-bottom: 1rem;
   }
   
-  .section-icon {
-    font-size: 1.2em;
+  .profile-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold-accent), var(--moss-green));
   }
   
-  /* Info Items (Clean & Modern) */
+  .personal-info {
+    background: linear-gradient(
+      145deg,
+      rgba(235, 245, 235, 0.9) 0%,
+      rgba(255, 255, 255, 0.9) 100%
+    );
+  }
+  
+  .academic-info {
+    background: linear-gradient(
+      145deg,
+      rgba(245, 240, 230, 0.9) 0%,
+      rgba(255, 255, 255, 0.9) 100%
+    );
+  }
+  
+  /* Info Grid - Perfect Card Layout */
   .info-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.2rem;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
   }
   
   .info-item {
+    padding: 1.5rem;
+    border-radius: 16px;
     background: white;
-    padding: 1.2rem;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    border-left: 3px solid var(--soft-green);
+    box-shadow: var(--shadow-soft);
+    transition: all 0.3s var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .info-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--deep-forest), var(--moss-green));
   }
   
   .info-item.highlight {
-    background: linear-gradient(135deg, var(--light-green) 0%, white 100%);
-    border-left: 3px solid var(--accent-red);
+    background: linear-gradient(145deg, #fff 0%, #f8f8f8 100%);
+    box-shadow: 0 6px 20px rgba(10, 41, 26, 0.1);
   }
   
-  .info-item:hover {
-    background: var(--light-green);
-    transform: translateX(4px);
+  .info-item.highlight::before {
+    background: linear-gradient(to bottom, var(--gold-accent), #e6b422);
   }
   
   .info-label {
-    font-size: 0.85rem;
-    color: var(--warm-gray);
-    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--moss-green);
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: 0.5rem;
@@ -194,51 +263,89 @@
   }
   
   .info-value {
-    font-size: 1.1rem;
-    color: var(--dark-gray);
+    font-size: 1.2rem;
+    color: var(--slate-dark);
     font-weight: 500;
+    margin: 0;
   }
   
   .info-value a {
-    color: var(--deep-green);
+    color: var(--deep-forest);
     text-decoration: none;
-    transition: all 0.2s ease;
+    font-weight: 600;
+    transition: all 0.3s var(--transition-smooth);
   }
   
   .info-value a:hover {
-    color: var(--accent-red);
-    text-decoration: underline;
+    color: var(--gold-accent);
   }
   
-  /* Error & Empty States */
-  .error-card {
-    color: #b33a3a;
-    background-color: rgba(179, 58, 58, 0.08);
-    padding: 1.5rem;
-    border-radius: var(--border-radius);
-    border-left: 4px solid #b33a3a;
-  }
-  
-  .empty-state {
+  /* Error States - Beautifully Designed */
+  .error-card, .empty-state {
+    padding: 3rem;
     text-align: center;
-    padding: 3rem 0;
-    color: var(--warm-gray);
+    border-radius: 20px;
+    background: var(--mist-white);
+    box-shadow: var(--shadow-soft);
   }
   
-  /* Responsive Design */
-  @media (max-width: 768px) {
+  .error-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    color: var(--gold-accent);
+  }
+  
+  .error-card h3, .empty-state h3 {
+    margin-top: 0;
+    color: var(--deep-forest);
+  }
+  
+  /* Back Button - Perfect Placement */
+  .back-button {
+    position: absolute;
+    top: -3rem;
+    left: -2rem;
+    background: none;
+    border: none;
+    color: var(--deep-forest);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s var(--transition-smooth);
+  }
+  
+  .back-button:hover {
+    background: rgba(10, 41, 26, 0.05);
+  }
+  
+  /* Responsive Perfection */
+  @media (max-width: 1024px) {
     .profile-container {
-      padding: 1.5rem;
+      padding: 2rem;
     }
     
     .profile-header {
-      flex-direction: column;
-      text-align: center;
+      grid-template-columns: 1fr;
       gap: 1.5rem;
     }
     
-    .profile-content {
-      grid-template-columns: 1fr;
+    .avatar-title-group {
+      flex-direction: column;
+      text-align: center;
+    }
+    
+    .profile-badge {
+      margin: 0 auto;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .profile-container {
+      padding: 1.5rem;
     }
     
     .profile-avatar {
@@ -246,7 +353,15 @@
       height: 100px;
     }
     
-    .profile-title h1 {
+    .title-group h1 {
       font-size: 2rem;
+    }
+    
+    .info-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .tab-navigation {
+      flex-direction: column;
     }
   }
