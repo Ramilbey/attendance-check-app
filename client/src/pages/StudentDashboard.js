@@ -73,8 +73,8 @@ function StudentDashboard() {
         className="student-info-card"
         style={{ backgroundColor: "#f5f3ef   " }}
         onClick={() =>
-          navigate(`/student/${summary.studentID}`, {
-            state: { ...studentData },
+          navigate(`/student/${summary.studentID}/profile`, {
+            state: { student: summary },
           })
         }
         role="button"

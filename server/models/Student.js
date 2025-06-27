@@ -12,76 +12,31 @@ const studentSchema = new mongoose.Schema({
     unique: true,
     trim: true
   },
-  email: {
+  // Make all other fields optional
+  advisor: {
     type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    lowercase: true,
-    match: [/^\w+([\.-]?\w+)*@xmu\.edu\.my$/, 'Please fill a valid XMUM email address']
-  },
-  country: {
-    type: String,
-    required: true,
-    default: "Malaysia"
+    default: "Not assigned"
   },
   yearOfStudy: {
     type: Number,
-    required: true,
-    min: 1,
-    max: 4
+    default: 1
   },
   program: {
     type: String,
-    required: true,
-    enum: ['Computer Science', 'Electrical Engineering', 'Business Administration', 'Other']
+    default: "Undecided"
   },
   batch: {
     type: String,
-    required: true,
-    match: [/^20\d{2}$/, 'Batch must be a valid year (e.g., 2021)']
-  },
-  cgpa: {
-    type: Number,
-    min: 0,
-    max: 4,
-    default: 0
-  },
-  currentGPA: {
-    type: Number,
-    min: 0,
-    max: 4,
-    default: 0
-  },
-  advisor: {
-    type: String,
-    required: true
+    default: "2023"
   },
   contactNumber: {
     type: String,
-    required: true,
-    match: [/^\+?\d{1,3}[- ]?\d{1,14}$/, 'Please fill a valid phone number']
+    default: "+60120000000"
   },
   emergencyContact: {
     type: String,
-    required: true
-  },
-  // You can keep these attendance fields if needed elsewhere in your system
-  attendance: {
-    present: { type: Number, default: 0 },
-    absent: { type: Number, default: 0 },
-    totalClasses: { type: Number, default: 0 }
+    default: "Not provided"
   }
-}, {
-  timestamps: true,
-});
-
-// Add index for faster queries
-studentSchema.index({ studentID: 1, email: 1 });
-
-// Virtual for email generation (if you want to auto-generate based on ID)
-studentSchema.virtual('generatedEmail').get(function() {
-  return `${this.studentID.toLowerCase()}@xmu.edu.my`;
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model("Student", studentSchema);
