@@ -143,7 +143,7 @@ function StudentDashboard() {
         <div className="chart-card">
           <h2>Attendance Overview</h2>
           <div className="chart-wrapper">
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={250}>
               <PieChart>
                 <Pie
                   data={chartData}
@@ -177,10 +177,10 @@ function StudentDashboard() {
           <h2>Weekly Attendance Trend</h2>
           <p className="trend-text">{trendText}</p>
           <div className="chart-wrapper">
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={200}>
               <BarChart
                 data={weeklyTrend}
-                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                margin={{ top: 10, right: 30, left: 20, bottom: 5 }}
               >
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                 <XAxis dataKey="week" />

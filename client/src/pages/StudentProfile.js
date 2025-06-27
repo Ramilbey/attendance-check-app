@@ -1,9 +1,6 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import "./StudentProfile.css";
-
-const COLORS = ["#10b981", "#e5e7eb"];
 
 function StudentProfile() {
   const location = useLocation();
@@ -24,22 +21,16 @@ function StudentProfile() {
   // Extract data from studentData with default values
   const { 
     name = '',
-    studentID = '',
-    present = 0,
-    absent = 0,
-    attendancePercentage = 0,
-    totalClasses = 0,
-    presentDetails = [],
-    absentDetails = []
+    studentID = ''
   } = studentData;
 
-  // Additional profile data (either from API or default values)
+  // Additional profile data
   const profileData = {
     fullName: name,
     studentId: studentID,
     email: `${studentID.toLowerCase()}@xmu.edu.my`,
     country: "Malaysia",
-    yearOfStudy: "Year " + Math.ceil(totalClasses/30), // Example calculation
+    yearOfStudy: "Year " + Math.ceil(studentID.substring(2, 4)), // Example calculation
     program: "Computer Science",
     batch: "20" + studentID.substring(0, 2), // Example: ID starts with year
     cgpa: "3." + Math.floor(Math.random() * 5), // Example random CGPA
@@ -48,11 +39,6 @@ function StudentProfile() {
     contactNumber: "+60 12-345 6789",
     emergencyContact: "Parent/Guardian: +60 12-987 6543"
   };
-
-  const chartData = [
-    { name: "Present", value: present },
-    { name: "Absent", value: absent },
-  ];
 
   return (
     <div className="profile-container">
@@ -71,9 +57,6 @@ function StudentProfile() {
         <div className="profile-title">
           <h1>{profileData.fullName}</h1>
           <p className="student-id">{profileData.studentId}</p>
-          <div className={`attendance-status ${attendancePercentage >= 75 ? 'good' : 'warning'}`}>
-            Attendance Status: {attendancePercentage >= 80 ? 'Good' : 'Needs Improvement'} ({attendancePercentage}%)
-          </div>
         </div>
       </div>
 
@@ -128,51 +111,12 @@ function StudentProfile() {
                 <span className="gpa-value">{profileData.currentGPA}</span>
               </div>
             </div>
-
-            <div className="attendance-chart">
-              <h3>Attendance Summary</h3>
-              <div className="chart-wrapper">
-                <ResponsiveContainer width="100%" height={200}>
-                  <PieChart>
-                    <Pie
-                      data={chartData}
-                      dataKey="value"
-                      nameKey="name"
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={80}
-                      innerRadius={50}
-                      paddingAngle={3}
-                    >
-                      {chartData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index]} />
-                      ))}
-                    </Pie>
-                    <text x="50%" y="50%" textAnchor="middle" dominantBaseline="middle">
-                      {attendancePercentage}%
-                    </text>
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
           </div>
 
           <div className="academic-details">
             <div className="detail-item">
               <span className="detail-label">Academic Advisor</span>
               <span className="detail-value">{profileData.advisor}</span>
-            </div>
-            <div className="detail-item">
-              <span className="detail-label">Total Classes</span>
-              <span className="detail-value">{totalClasses}</span>
-            </div>
-            <div className="detail-item">
-              <span className="detail-label">Present</span>
-              <span className="detail-value">{present}</span>
-            </div>
-            <div className="detail-item">
-              <span className="detail-label">Absent</span>
-              <span className="detail-value">{absent}</span>
             </div>
           </div>
         </div>

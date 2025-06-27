@@ -3,11 +3,22 @@ const router = express.Router();
 const Student = require("../models/Student");
 const Attendance = require("../models/Attendance");
 
-// 📌 Create a student
+// 📌 Create a student (with full profile data)
 router.post("/", async (req, res) => {
-  const { name, studentID } = req.body;
   try {
-    const student = new Student({ name, studentID });
+    // Include all profile fields from request body
+    const student = new Student({
+      name: req.body.name,
+      studentID: req.body.studentID,
+      email: req.body.email || `${req.body.studentID.toLowerCase()}@xmu.edu.my`,
+      country: req.body.country || "Malaysia",
+      yearOfStudy: req.body.yearOfStudy,
+      program: req.body.program,
+      batch: req.body.batch,
+      contactNumber: req.body.contactNumber,
+      emergencyContact: req.body.emergencyContact
+    });
+    
     await student.save();
     res.status(201).json(student);
   } catch (err) {
@@ -15,16 +26,52 @@ router.post("/", async (req, res) => {
   }
 });
 
-// 📌 Get all students
+// 📌 Get all students (with basic info)
 router.get("/", async (req, res) => {
   try {
-    const students = await Student.find();
+    const students = await Student.find().select('name studentID email program batch');
     res.json(students);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
+// 📌 Get student profile (full details)
+router.get("/:id/profile", async (req, res) => {
+  try {
+    const student = await Student.findOne({ studentID: req.params.id })
+      .select('-__v -createdAt -updatedAt');
+      
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    
+    res.json(student);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 📌 Update student profile
+router.patch("/:id/profile", async (req, res) => {
+  try {
+    const updatedStudent = await Student.findOneAndUpdate(
+      { studentID: req.params.id },
+      req.body,
+      { new: true, runValidators: true }
+    ).select('-__v');
+    
+    if (!updatedStudent) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    
+    res.json(updatedStudent);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// 📌 Student check-in with attendance (existing route - unchanged)
 router.post('/check', async (req, res) => {
   const { name, studentID } = req.body;
 
@@ -44,7 +91,7 @@ router.post('/check', async (req, res) => {
 
     const formatEntry = (a) => ({
       lesson: a.lesson,
-      date: a.date, // Keep full ISO date with time
+      date: a.date,
     });
 
     const presentDetails = attendance
@@ -71,7 +118,5 @@ router.post('/check', async (req, res) => {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
 });
-
-  
 
 module.exports = router;
