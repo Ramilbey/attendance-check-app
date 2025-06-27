@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./StudentCheck.css"; // 
+import "./StudentCheck.css";
 
 function StudentCheck() {
   const [studentID, setStudentID] = useState("");
@@ -22,9 +22,23 @@ function StudentCheck() {
       if (!response.ok) throw new Error("Student not found or incorrect credentials");
 
       const data = await response.json();
-      navigate("/dashboard", { state: data });
+      
+      // Ensure the response contains all required fields
+      const completeData = {
+        ...data,
+        studentID: studentID, // Make sure studentID is included
+        name: name,           // Make sure name is included
+      };
+      
+      navigate("/dashboard", { state: completeData });
     } catch (err) {
       setError(err.message);
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      fetchAttendance();
     }
   };
 
@@ -38,6 +52,7 @@ function StudentCheck() {
           placeholder="Student ID"
           value={studentID}
           onChange={(e) => setStudentID(e.target.value)}
+          onKeyPress={handleKeyPress}
           className="check-input"
         />
         <input
@@ -45,6 +60,7 @@ function StudentCheck() {
           placeholder="Student Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          onKeyPress={handleKeyPress}
           className="check-input"
         />
 

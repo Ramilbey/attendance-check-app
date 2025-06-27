@@ -1,0 +1,186 @@
+.profile-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+  }
+  
+  .back-button {
+    background: none;
+    border: none;
+    color: #3b82f6;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .back-button:hover {
+    text-decoration: underline;
+  }
+  
+  .profile-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+    border: 3px solid #10b981;
+  }
+  
+  .profile-title h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: #111827;
+  }
+  
+  .student-id {
+    margin: 0.5rem 0;
+    color: #6b7280;
+    font-size: 1rem;
+  }
+  
+  .attendance-status {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    margin-top: 0.5rem;
+  }
+  
+  .attendance-status.good {
+    background-color: #d1fae5;
+    color: #065f46;
+  }
+  
+  .attendance-status.warning {
+    background-color: #fee2e2;
+    color: #b91c1c;
+  }
+  
+  .profile-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  
+  .profile-section {
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-section h2 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
+    color: #111827;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 0.75rem;
+  }
+  
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  
+  .info-item {
+    margin-bottom: 1rem;
+  }
+  
+  .info-label {
+    display: block;
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 0.25rem;
+  }
+  
+  .info-value {
+    font-weight: 500;
+    color: #111827;
+  }
+  
+  .academic-stats {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .gpa-display {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .gpa-item {
+    text-align: center;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: #f3f4f6;
+    min-width: 100px;
+  }
+  
+  .gpa-label {
+    display: block;
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+  
+  .gpa-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #10b981;
+  }
+  
+  .attendance-chart {
+    flex-grow: 1;
+  }
+  
+  .chart-wrapper {
+    height: 200px;
+    margin-top: 1rem;
+  }
+  
+  .academic-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  
+  .detail-item {
+    margin-bottom: 1rem;
+  }
+  
+  .detail-label {
+    display: block;
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 0.25rem;
+  }
+  
+  .detail-value {
+    font-weight: 500;
+    color: #111827;
+  }
+  
+  .error-message {
+    color: #b91c1c;
+    text-align: center;
+    margin: 2rem 0;
+  }
