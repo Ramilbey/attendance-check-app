@@ -9,6 +9,7 @@
 
 /* Student Info Card */
 .student-info-card {
+  cursor: pointer;
   display: flex;
   align-items: center;
   background: #ffffff;
@@ -16,7 +17,17 @@
   padding: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
+.student-info-card:hover {
+  transform: scale(1.01);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+.student-info-card:active {
+  transform: scale(0.98);
+}
+
 
 .student-avatar {
   margin-right: 20px;
