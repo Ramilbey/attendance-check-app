@@ -1,0 +1,180 @@
+/* src/Timetable.css */
+.timetable-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .back-button {
+    background: none;
+    border: none;
+    color: #2c3e50;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+  
+  .back-button:hover {
+    background: #f0f0f0;
+  }
+  
+  .timetable-header {
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .day-selector {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+  
+  .day-button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 8px;
+    background: #f0f0f0;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  
+  .day-button.active {
+    background: #6b8e23;
+    color: white;
+  }
+  
+  .timetable-grid {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .time-column {
+    display: grid;
+    grid-template-rows: repeat(12, 60px);
+  }
+  
+  .time-slot {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    color: #2c3e50;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+  }
+  
+  .classes-grid {
+    display: grid;
+    grid-template-rows: repeat(12, 60px);
+  }
+  
+  .class-slot {
+    border-bottom: 1px solid #eee;
+    position: relative;
+  }
+  
+  .class-card {
+    position: absolute;
+    top: 0.25rem;
+    left: 0.25rem;
+    right: 0.25rem;
+    bottom: 0.25rem;
+    background: white;
+    border-radius: 6px;
+    padding: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow: hidden;
+    border-left: 4px solid #6b8e23;
+  }
+  
+  .class-time {
+    font-size: 0.8rem;
+    color: #6b8e23;
+    margin-bottom: 0.25rem;
+  }
+  
+  .class-name {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    font-size: 0.9rem;
+  }
+  
+  .class-code, .class-lecturer {
+    font-size: 0.8rem;
+    color: #7f8c8d;
+  }
+  
+  .academic-calendar {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .academic-calendar h2 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+  }
+  
+  .semesters {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .semester-card {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  
+  .semester-card h3 {
+    margin-top: 0;
+    color: #2c3e50;
+  }
+  
+  .holidays-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  
+  .holiday-card {
+    background: #fff8e1;
+    border-radius: 8px;
+    padding: 1rem;
+    border-left: 4px solid #ffc107;
+  }
+  
+  .holiday-date {
+    font-weight: 600;
+    color: #2c3e50;
+  }
+  
+  .holiday-name {
+    font-size: 0.9rem;
+  }
+  
+  @media (max-width: 768px) {
+    .timetable-grid {
+      grid-template-columns: 80px 1fr;
+    }
+    
+    .time-slot, .class-card {
+      font-size: 0.8rem;
+    }
+    
+    .semesters, .holidays-grid {
+      grid-template-columns: 1fr;
+    }
+  }

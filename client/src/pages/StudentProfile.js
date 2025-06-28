@@ -15,40 +15,17 @@ const timetableData = {
     { time: "4:00-5:00", course: "Data Structure", code: "S5O'108", lecturer: "Safi K2th Bh4d" },
     { time: "4:00-5:00", course: "(Week 1-15)", code: "A1S630" }
   ],
-  "Tuesday": [
-    // Add your Tuesday classes if any
-  ],
-  "Wednesday": [
-    // Add your Wednesday classes if any
-  ],
-  "Thursday": [
-    // Add your Thursday classes if any
-  ],
-  "Friday": [
-    // Add your Friday classes if any
-  ],
+  "Tuesday": [],
+  "Wednesday": [],
+  "Thursday": [],
+  "Friday": [],
   "Saturday": [
     { time: "9:00-10:00", course: "Introduction of Software Engineering", code: "S5O'107", lecturer: "Al-Fanarch Middle Warsaw: Dilated" },
     { time: "10:00-11:00", course: "(Week 1-15)", code: "A1-SG01" },
     { time: "5:00-6:00", course: "Fundamentals of Network Technology", code: "S5O'703", lecturer: "Thursday/July Bansasamy" },
     { time: "5:00-6:00", course: "(Week 1-15)", code: "A1-A7D" }
   ],
-  "Sunday": [
-    // Add your Sunday classes if any
-  ]
-};
-
-const academicCalendar = {
-  semesters: [
-    { name: "February Semester", start: "2025-02-07", end: "2025-03-21" },
-    { name: "April Semester", start: "2025-03-28", end: "2025-08-01" },
-    { name: "September Semester", start: "2025-09-26", end: "2026-01-23" }
-  ],
-  holidays: [
-    { date: "2025-01-01", name: "New Year's Day" },
-    { date: "2025-01-02", name: "Aguro's Birthday" },
-    // Add all other holidays from your table
-  ]
+  "Sunday": []
 };
 
 const StudentProfile = () => {
@@ -71,7 +48,6 @@ const StudentProfile = () => {
         const data = await response.json();
         setStudent(data);
         
-        // Set timetable for current day
         const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
         setCurrentDay(today);
         setTodayTimetable(timetableData[today] || []);
@@ -82,137 +58,14 @@ const StudentProfile = () => {
       }
     };
 
-    fetchStudent();
+    if (studentID) {
+      fetchStudent();
+    }
   }, [studentID]);
 
-  // ... (keep all your existing state components like LoadingState, ErrorState, etc.)
-
-  const HeaderSection = ({ student, navigate }) => {
-    const [showTimetableTooltip, setShowTimetableTooltip] = useState(false);
-
-    return (
-      <header className="profile-header">
-        {/* ... other header elements ... */}
-        
-        <div className="badge-container">
-          <motion.div 
-            className="profile-badge"
-            whileHover={{ scale: 1.05 }}
-            onMouseEnter={() => setShowTimetableTooltip(true)}
-            onMouseLeave={() => setShowTimetableTooltip(false)}
-            onClick={() => navigate('/timetable')}
-          >
-            {student.program}
-            
-            <AnimatePresence>
-              {showTimetableTooltip && (
-                <motion.div
-                  className="timetable-tooltip"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <h4>{currentDay}'s Classes</h4>
-                  {todayTimetable.length > 0 ? (
-                    <ul>
-                      {todayTimetable.map((classItem, index) => (
-                        <li key={index}>
-                          <strong>{classItem.time}</strong><br />
-                          {classItem.course}<br />
-                          {classItem.code} | {classItem.lecturer || 'TBA'}
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p>No classes scheduled today</p>
-                  )}
-                  <p className="tooltip-hint">Click to view full timetable</p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        </div>
-      </header>
-    );
-  };
-
-  // Add this new component for the full timetable page
-  const TimetablePage = () => {
-    const [selectedDay, setSelectedDay] = useState(currentDay);
-
-    return (
-      <div className="timetable-page">
-        <h2>Software Engineering Timetable</h2>
-        
-        <div className="day-selector">
-          {Object.keys(timetableData).map(day => (
-            <button
-              key={day}
-              className={selectedDay === day ? 'active' : ''}
-              onClick={() => setSelectedDay(day)}
-            >
-              {day}
-            </button>
-          ))}
-        </div>
-
-        <div className="timetable-grid">
-          <div className="time-column">
-            {Array.from({length: 13}, (_, i) => `${8 + i}:00-${9 + i}:00`).map(time => (
-              <div key={time} className="time-slot">{time}</div>
-            ))}
-          </div>
-          
-          <div className="classes-grid">
-            {Array.from({length: 13}, (_, i) => {
-              const currentTime = `${8 + i}:00-${9 + i}:00`;
-              const classItem = timetableData[selectedDay]?.find(
-                c => c.time.split('-')[0] === currentTime.split('-')[0]
-              );
-              
-              return (
-                <div key={currentTime} className="class-slot">
-                  {classItem ? (
-                    <div className="class-card">
-                      <div className="class-time">{classItem.time}</div>
-                      <div className="class-name">{classItem.course}</div>
-                      <div className="class-details">
-                        {classItem.code} | {classItem.lecturer || 'TBA'}
-                      </div>
-                    </div>
-                  ) : null}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="academic-info">
-          <h3>2025 Academic Calendar</h3>
-          <ul>
-            {academicCalendar.semesters.map(sem => (
-              <li key={sem.name}>
-                <strong>{sem.name}:</strong> {sem.start} to {sem.end}
-              </li>
-            ))}
-          </ul>
-          
-          <h3>Public Holidays</h3>
-          <div className="holidays-grid">
-            {academicCalendar.holidays.map(holiday => (
-              <div key={holiday.date} className="holiday-card">
-                <div className="holiday-date">{holiday.date}</div>
-                <div className="holiday-name">{holiday.name}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  // ... rest of your existing components ...
+  if (loading) return <LoadingState />;
+  if (error) return <ErrorState error={error} navigate={navigate} />;
+  if (!student) return <EmptyState navigate={navigate} />;
 
   return (
     <motion.div 
@@ -221,9 +74,229 @@ const StudentProfile = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      {/* ... your existing profile components ... */}
+      <HeaderSection 
+        student={student} 
+        navigate={navigate} 
+        currentDay={currentDay}
+        todayTimetable={todayTimetable}
+      />
+      
+      <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
+      
+      <AnimatePresence mode="wait">
+        <ContentSection 
+          activeTab={activeTab} 
+          student={student} 
+          key={activeTab} 
+        />
+      </AnimatePresence>
     </motion.div>
   );
 };
+
+// Sub-Components
+const LoadingState = () => (
+  <div className="profile-container">
+    <div className="loading-animation">
+      <div className="spinner"></div>
+      <p>Loading Student Profile...</p>
+    </div>
+  </div>
+);
+
+const ErrorState = ({ error, navigate }) => (
+  <motion.div
+    className="profile-container"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+  >
+    <div className="error-card">
+      <div className="error-icon">⚠️</div>
+      <h3>Error Loading Profile</h3>
+      <p>{error}</p>
+      <motion.button
+        onClick={() => navigate(-1)}
+        className="back-button"
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.97 }}
+      >
+        ← Return to Previous Page
+      </motion.button>
+    </div>
+  </motion.div>
+);
+
+const EmptyState = ({ navigate }) => (
+  <div className="profile-container">
+    <div className="empty-state">
+      <h3>Profile Not Found</h3>
+      <p>The requested student profile doesn't exist</p>
+      <motion.button
+        onClick={() => navigate("/dashboard")}
+        className="back-button"
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.97 }}
+      >
+        ← Back to Dashboard
+      </motion.button>
+    </div>
+  </div>
+);
+
+const HeaderSection = ({ student, navigate, currentDay, todayTimetable }) => {
+  const [showTimetableTooltip, setShowTimetableTooltip] = useState(false);
+
+  return (
+    <header className="profile-header">
+      <motion.button
+        onClick={() => navigate(-1)}
+        className="back-button"
+        whileHover={{ x: -3 }}
+        whileTap={{ scale: 0.97 }}
+      >
+        ← Back
+      </motion.button>
+      
+      <div className="avatar-title-group">
+        <motion.div 
+          className="profile-avatar"
+          whileHover={{ rotate: 5 }}
+        >
+          {student.avatar ? (
+            <img src={student.avatar} alt={student.name} />
+          ) : (
+            <div className="avatar-placeholder">
+              {student.name ? student.name.charAt(0).toUpperCase() : '?'}
+            </div>
+          )}
+        </motion.div>
+        
+        <div className="title-group">
+          <motion.h1
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
+            {student.name || 'Unknown Student'}
+          </motion.h1>
+          <p className="student-id">ID: {student.studentID || 'N/A'}</p>
+        </div>
+      </div>
+      
+      <div className="badge-container">
+        <motion.div 
+          className="profile-badge"
+          whileHover={{ scale: 1.05 }}
+          onMouseEnter={() => setShowTimetableTooltip(true)}
+          onMouseLeave={() => setShowTimetableTooltip(false)}
+          onClick={() => navigate('/timetable')}
+          style={{ cursor: 'pointer' }}
+        >
+          {student.program || 'No Program'}
+          
+          <AnimatePresence>
+            {showTimetableTooltip && (
+              <motion.div
+                className="timetable-tooltip"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.2 }}
+              >
+                <h4>{currentDay}'s Classes</h4>
+                {todayTimetable.length > 0 ? (
+                  <ul>
+                    {todayTimetable.map((classItem, index) => (
+                      <li key={index}>
+                        <strong>{classItem.time}</strong><br />
+                        {classItem.course}<br />
+                        {classItem.code} | {classItem.lecturer || 'TBA'}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>No classes scheduled today</p>
+                )}
+                <p className="tooltip-hint">Click to view full timetable</p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      </div>
+    </header>
+  );
+};
+
+const TabNavigation = ({ activeTab, setActiveTab }) => (
+  <nav className="tab-navigation">
+    {["personal", "academic"].map((tab) => (
+      <motion.button
+        key={tab}
+        className={`tab-btn ${activeTab === tab ? "active" : ""}`}
+        onClick={() => setActiveTab(tab)}
+        whileHover={{ y: -2 }}
+        whileTap={{ scale: 0.98 }}
+      >
+        {tab === "personal" ? "👤 Personal" : "🎓 Academic"}
+      </motion.button>
+    ))}
+  </nav>
+);
+
+const ContentSection = ({ activeTab, student }) => {
+  const personalInfo = [
+    { label: "Email", value: student.email || 'N/A', isLink: !!student.email },
+    { label: "Country", value: student.country || 'N/A' },
+    { label: "Contact", value: student.contactNumber || 'N/A', isLink: !!student.contactNumber },
+    { label: "Emergency", value: student.emergencyContact || 'N/A' }
+  ];
+
+  const academicInfo = [
+    { label: "Program", value: student.program || 'N/A' },
+    { label: "Batch", value: student.batch || 'N/A' },
+    { label: "Year", value: student.yearOfStudy || 'N/A' },
+    { label: "Advisor", value: student.advisor || 'N/A' },
+    { label: "CGPA", value: student.cgpa ?? "N/A", isHighlight: true }
+  ];
+
+  return (
+    <motion.section
+      className={`profile-section ${activeTab}-info`}
+      initial={{ opacity: 0, x: activeTab === "personal" ? -20 : 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: activeTab === "personal" ? 20 : -20 }}
+      transition={{ duration: 0.3 }}
+    >
+      <h2>
+        {activeTab === "personal" ? "Personal Information" : "Academic Information"}
+      </h2>
+      
+      <div className="info-grid">
+        {(activeTab === "personal" ? personalInfo : academicInfo).map((item) => (
+          <InfoItem key={item.label} {...item} />
+        ))}
+      </div>
+    </motion.section>
+  );
+};
+
+const InfoItem = ({ label, value, isLink = false, isHighlight = false }) => (
+  <motion.div
+    className={`info-item ${isHighlight ? "highlight" : ""}`}
+    whileHover={{ y: -3 }}
+    transition={{ type: "spring", stiffness: 400 }}
+  >
+    <span className="info-label">{label}</span>
+    <p className="info-value">
+      {isLink && value !== 'N/A' ? (
+        <a href={label === "Email" ? `mailto:${value}` : `tel:${value}`}>
+          {value}
+        </a>
+      ) : (
+        value
+      )}
+    </p>
+  </motion.div>
+);
 
 export default StudentProfile;
