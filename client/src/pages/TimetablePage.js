@@ -6,26 +6,26 @@ import './TimetablePage.css';
 // Your exact timetable data
 const timetableData = {
   "Monday": [
-    { time: "8:00-9:00", course: "Data Structure", code: "S5O'108", lecturer: "Safi K2th Bh4d" },
-    { time: "9:00-10:00", course: "(Week 1-15)", code: "A3A630" },
-    { time: "12:00-1:00", course: "Computer Architecture", code: "A2-B707", lecturer: "Middle Bh4a Azazek" },
-    { time: "2:00-3:00", course: "Interplay and Anti-Generation Lab", code: "MW03222", lecturer: "Young Keong" },
-    { time: "3:00-4:00", course: "Fundamentals of Network Technology", code: "S5O'703", lecturer: "Thursday/July Bansasamy" },
-    { time: "4:00-5:00", course: "(Week 1-15)", code: "A4A670" },
-    { time: "4:00-5:00", course: "Data Structure", code: "S5O'108", lecturer: "Safi K2th Bh4d" },
-    { time: "4:00-5:00", course: "(Week 1-15)", code: "A1S630" }
+    { time: "8:00-9:00", course: "Data Structure", code: "S5O'108", lecturer: "Saif Kifah Jihad" },
+    { time: "12:00-1:00", course: "Computer Architecture", code: "A2-B707", lecturer: "Hafizah Bte A Razak" },
+    { time: "3:00-4:00", course: "Fundamentals of Network Technology", code: "S5O'703", lecturer: "Tharsiniy A/P Ramasamy" },
   ],
-  "Tuesday": [],
-  "Wednesday": [],
-  "Thursday": [],
-  "Friday": [],
-  "Saturday": [
-    { time: "9:00-10:00", course: "Introduction of Software Engineering", code: "S5O'107", lecturer: "Al-Fanarch Middle Warsaw: Dilated" },
-    { time: "10:00-11:00", course: "(Week 1-15)", code: "A1-SG01" },
-    { time: "5:00-6:00", course: "Fundamentals of Network Technology", code: "S5O'703", lecturer: "Thursday/July Bansasamy" },
-    { time: "5:00-6:00", course: "(Week 1-15)", code: "A1-A7D" }
+    "Tuesday": [
+        { time: "2:00-4:00", course: "Interplay and Anti-Generation Lab", code: "MW03222", lecturer: "Young Keong" },
+        { time: "4:00-6:00", course: "Data Structure", code: "S5O'108", lecturer: "Saif Kifah Jihad" },
+    ],
+        
+    "Wednesday": [
+        { time: "10:00-12:00", course: "Community Service", lecturer: "Nurul Hafeeza Bt Juma'ah", code: 'A2#g09' },
+        { time: "4:00-5:00", course: "Computer Architecture", code: "A1-102", lecturer: "Hafizah Bte A Razak" },
+        
   ],
-  "Sunday": []
+    "Thursday": [
+        { time: "5:00-7:00", course: "Fundamentals of Network Technology", code: "A1#102", lecturer: "Tharsiniy A/P Ramasamy" }
+  ],
+    "Friday": [
+        { time: "9:00-12:00", course: "Introduction of Software Engineering", code: "A1#G01", lecturer: "Al-Fawareh Hejab Ma'azer Khaled" },
+  ]
 };
 
 const academicCalendar = {
