@@ -12,7 +12,8 @@ function App() {
         <Routes>
           <Route path="/" element={<StudentCheck />} />
           <Route path="/dashboard" element={<StudentDashboard />} />
-          <Route path="/student/:studentID" element={<StudentProfile/> } />
+          <Route path="/student/:studentID" element={<StudentProfile />} />
+          <Route path="/timetable" element={<TimetablePage />} />
         </Routes>
       </div>
     </Router>
