@@ -15,12 +15,12 @@ const timetableData = {
     { time: "4:00-5:00", course: "Data Structure",  lecturer: "Safi K2th Bh4d" },
     { time: "4:00-5:00", course: "(Week 1-15)" }
   ],
-  Saturday: [
-    { time: "9:00-10:00", course: "Introduction of Software Engineering", code: "S5O'107", lecturer: "Al-Fanarch Middle Warsaw: Dilated" },
-    { time: "10:00-11:00", course: "(Week 1-15)", code: "A1-SG01" },
-    { time: "5:00-6:00", course: "Fundamentals of Network Technology", code: "S5O'703", lecturer: "Thursday/July Bansasamy" },
-    { time: "5:00-6:00", course: "(Week 1-15)", code: "A1-A7D" }
-  ]
+//   Saturday: [
+//     { time: "9:00-10:00", course: "Introduction of Software Engineering", code: "S5O'107", lecturer: "Al-Fanarch Middle Warsaw: Dilated" },
+//     { time: "10:00-11:00", course: "(Week 1-15)", code: "A1-SG01" },
+//     { time: "5:00-6:00", course: "Fundamentals of Network Technology", code: "S5O'703", lecturer: "Thursday/July Bansasamy" },
+//     { time: "5:00-6:00", course: "(Week 1-15)", code: "A1-A7D" }
+//   ]
 };
 
 const StudentProfile = () => {
