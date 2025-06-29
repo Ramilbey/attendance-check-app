@@ -119,7 +119,7 @@ const HeaderSection = ({ student, navigate, currentDay, todayTimetable }) => {
           whileHover={{ scale: 1.05 }}
           onClick={() => navigate("/timetable")}
         >
-          📅 {student.program || "No Program"}
+          📅 {student.program || "No Program"} ➔
         </motion.div>
       </div>
     </header>
