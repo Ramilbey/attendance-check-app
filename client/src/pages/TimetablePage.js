@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./TimetablePage.css";
 
 // Better organized timetable data with consistent structure
@@ -120,6 +121,7 @@ const academicCalendar = {
 };
 
 const TimetablePage = () => {
+    const navigate =useNavigate()
   const [selectedDay, setSelectedDay] = useState(
     new Date().toLocaleDateString("en-US", { weekday: "long" })
   );
@@ -195,12 +197,12 @@ const TimetablePage = () => {
   const nextClass = getNextClass();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-4 md:p-8">
+    // < className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="bg-white rounded-3xl shadow-xl p-6 mb-8 border border-slate-200">
           <div className="flex items-center justify-between mb-6">
-            <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors">
+            <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors" onClick={()=>navigate(-1)}>
               ← Back
             </button>
 
@@ -433,7 +435,7 @@ const TimetablePage = () => {
           </div>
         </div>
       </div>
-    </div>
+    
   );
 };
 
