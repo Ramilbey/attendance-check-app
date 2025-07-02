@@ -207,7 +207,7 @@ const TimetablePage = () => {
             </button>
 
             <div className="text-center">
-              <h1 className="text-3xl md:text-4xl font-bold text-slate-800 mb-2">
+              <h1 className="text-2xl md:text-4xl font-bold text-slate-800 mb-2">
                 Software Engineering Timetable 
               </h1>
               <div className="flex items-center justify-center gap-2 text-slate-600">

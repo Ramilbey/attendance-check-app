@@ -1,68 +1,105 @@
 .page-container {
-    min-height: 100vh;
-    background-color: #f3f4f6;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
+  min-height: 100vh;
+  background-color: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.check-card {
+  background-color: white;
+  padding: clamp(1.5rem, 5vw, 2.5rem); /* Responsive padding */
+  border-radius: 12px;
+  width: min(100%, 400px); /* Full width on mobile, max 400px */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+}
+
+.check-title {
+  font-size: clamp(1.25rem, 5vw, 1.5rem); /* Fluid typography */
+  font-weight: bold;
+  text-align: center;
+  color: #005bac;
+  margin-bottom: clamp(1rem, 4vw, 1.5rem); /* Responsive margin */
+  font-family: 'Segoe UI', system-ui, sans-serif; /* Better font stack */
+  line-height: 1.3;
+}
+
+.check-input {
+  width: 100%;
+  padding: clamp(0.75rem, 3vw, 1rem); /* Responsive padding */
+  margin-bottom: clamp(1rem, 3vw, 1.25rem);
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: clamp(0.875rem, 3vw, 1rem); /* Fluid font size */
+  font-family: inherit;
+  box-sizing: border-box;
+  min-height: 48px; /* Better touch target */
+}
+
+.check-input:focus {
+  outline: none;
+  border-color: #005bac;
+  box-shadow: 0 0 0 3px rgba(0, 91, 172, 0.2);
+}
+
+.check-button {
+  width: 100%;
+  background-color: #005bac;
+  color: white;
+  padding: clamp(0.75rem, 3vw, 1rem);
+  border: none;
+  border-radius: 6px;
+  font-size: clamp(0.875rem, 3vw, 1rem);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  min-height: 48px; /* Better touch target */
+}
+
+.check-button:hover {
+  background-color: #00428b;
+}
+
+.check-button:active {
+  transform: scale(0.98); /* Click feedback */
+}
+
+.error-text {
+  color: #e11d48;
+  margin-top: clamp(0.75rem, 3vw, 1rem);
+  text-align: center;
+  font-size: clamp(0.75rem, 3vw, 0.875rem);
+  line-height: 1.4;
+}
+
+/* Tablet landscape and larger */
+@media (min-width: 768px) {
+  .page-container {
+    padding: 2rem;
   }
   
   .check-card {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 12px;
-    max-width: 400px;
-    width: 100%;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: 2.5rem;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
   }
-  
-  .check-title {
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-    color: #005bac;
-    margin-bottom: 1.5rem;
-    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Desktop hover states */
+@media (hover: hover) {
+  .check-button:hover {
+    background-color: #003a7a;
   }
-  
-  .check-input {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    margin-bottom: 1.25rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 16px;
-    font-family: inherit;
-    box-sizing: border-box;
-  }
-  
-  .check-input:focus {
-    outline: none;
-    border-color: #005bac;
-    box-shadow: 0 0 0 3px rgba(0, 91, 172, 0.2);
+}
+
+/* Very small mobile devices */
+@media (max-width: 360px) {
+  .check-card {
+    border-radius: 8px;
   }
   
   .check-button {
-    width: 100%;
-    background-color: #005bac;
-    color: white;
-    padding: 0.75rem;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.2s;
+    font-size: 0.9375rem;
   }
-  
-  .check-button:hover {
-    background-color: #00428b;
-  }
-  
-  .error-text {
-    color: #e11d48;
-    margin-top: 1rem;
-    text-align: center;
-    font-size: 14px;
-  }
-  
+}
