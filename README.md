@@ -1,100 +1,74 @@
-# Student Attendance Tracking System
+# 🎓 Student Attendance Tracking System – Full-Stack MERN Solution
 
-A full-stack MERN application for Xiamen University Malaysia (XMUM) students to view real-time attendance, personalize profiles, and access academic schedules.
-
----
-
-## ⚙️ Features
-
-- **Secure Login** using Student ID and full name.
-- **Attendance Dashboard** with:
-  - Total classes, present/absent count & percentage
-  - Interactive pie chart & weekly bar chart (via Recharts)
-  - Detailed per-lesson history (subject, date, and time)
-- **Profile Page** displaying:
-  - Student information (name, country, email, emergency contact)
-  - Academic details (major, CGPA, year of study)
-  - Clickable major to view timetable
-- **Digital Timetable & Calendar** featuring:
-  - Weekly class schedule
-  - Semester timeline
-  - Major-specific public holidays
-- **Responsive UI** with nature-inspired theme (light green, blue, gray, yellow, red)
-- **Smooth animations & hover effects** powered by Framer Motion
+> Revolutionizing how XMUM students track attendance, academic schedules, and personal records — Built with passion, precision, and modern web technologies.
 
 ---
 
-## 🛠️ Tech Stack
+## 🚀 Project Overview
 
-- **React.js** – front-end UI with component-based architecture and routing (react-router-dom)
-- **Node.js** – server-side runtime for event-driven backend
-- **Express.js** – lightweight REST API for data handling and validation
-- **MongoDB + Mongoose** – NoSQL database for users, attendance, and schedules
-- **CSS + Framer Motion** – responsive styling, interactive transitions, and smooth animations
+Student attendance plays a critical role in Malaysian universities, particularly for international students where attendance below 80% risks **visa cancellation**. However, students at **Xiamen University Malaysia (XMUM)** face a frustrating process, having to manually email academic departments just to view attendance records.
 
----
+To solve this real problem, I independently designed, developed, and deployed a **production-ready, full-stack web application** using the **MERN stack**. My solution empowers students with **instant access** to their attendance percentage, class history, academic profile, and a personalized timetable — all through a sleek, mobile-friendly interface.
 
-## 📥 Setup & Installation
-
-1. **Clone the repository**  
-   `git clone https://github.com/Ramilbey/attendance-check-app.git`
-
-2. **Install dependencies**  
-   - Frontend: `cd frontend && npm install`  
-   - Backend: `cd backend && npm install`
-
-3. **Configure environment variables**  
-   - In `/backend/.env`:  
-     ```
-     MONGO_URI=your_mongo_connection_string
-     JWT_SECRET=your_secret_key
-     PORT=5000
-     ```
-
-4. **Start the app**  
-   - Backend: `npm run dev` (auto-reloads on change)  
-   - Frontend: `npm start`
-
-5. **Access the app**  
-   Visit `http://localhost:3000`
+This system bridges the gap between institutional data and student self-awareness, boosting transparency, ease of use, and engagement.
 
 ---
 
-## 🧪 Testing
+## ✨ Core Features
 
-- **API Endpoints** verified with Postman for correct status codes and data formatting.
-- **Frontend Interaction** tested manually across browser sizes using DevTools.
-- **Performance** optimized (2s+ load times on typical network).
-- **Schema validation** ensures secure data flow with Mongoose.
-- **Edge cases** (invalid login, missing data) handled gracefully with error messages.
+- 🔐 **Student Login**  
+Secure login using Student ID and Full Name (no third-party accounts).
 
----
+- 📊 **Attendance Dashboard**  
+Instantly displays:
+  - Total classes attended and absent
+  - Percentage of attendance
+  - **Interactive Pie Chart** (Present vs. Absent)
+  - **Weekly Attendance Trend Bar Chart**
 
-## 📚 Academic Context
+- 👤 **Student Profile Page**
+  - Name, Country, Email, Emergency Contact
+  - Academic Details (Major, CGPA, Year of Study)
+  - Clickable Major → Timetable Navigation
 
-This project was developed as part of the **Intro to Software Engineering** course at XMUM. It demonstrates:
+- 📅 **Digital Timetable + Calendar**
+  - Dynamic, filterable weekly class schedule  
+  - Calendar shows **only your academic batch** + relevant public holidays  
+  - Clean, intuitive presentation unlike outdated PDF calendars
 
-- End-to-end full-stack skills using MERN
-- Software design principles influenced by literature (e.g., Sommerville, Pressman & Maxim)
-- Application of UI/UX processes, testing strategies, and project management practices learned in class
+- 🌿 **Nature-Inspired UI Design**
+  - Calm, vibrant colors (greens, blues, grays, yellows, reds)
+  - Designed for readability, comfort, and familiarity for Malaysian students
 
----
-
-## 🚀 Future Enhancements
-
-- Implement **authentication** via token-based login (JWT)
-- Add **role-based access** for administrators and staff
-- Deploy to **Heroku** or **Vercel** with CI/CD pipelines
-- Introduce **attendance alerts** and notifications
-
----
-
-## 🏷️ License & Contact
-
-- **License:** MIT  
-- **Maintainer:** Ramil  
-- **Email:** [your-email@example.com]
+- 📱 **Fully Responsive + Animated**
+  - Mobile-first, touch-friendly design
+  - Seamless hover & click animations powered by **Framer Motion**
 
 ---
 
-Thank you for trying out my app! Feel free to reach out for collaboration or feature suggestions. 😊
+## 🛠️ Tech Stack & Architecture
+
+| Layer           | Technology                                      | Purpose                                   |
+|-----------------|-------------------------------------------------|------------------------------------------|
+| **Frontend**    | React.js, React Router, Recharts, Framer Motion | UI Components, Routing, Data Visualization, Animations |
+| **Backend**     | Node.js, Express.js                             | RESTful API, Authentication, Business Logic |
+| **Database**    | MongoDB, Mongoose                               | NoSQL Data Storage (Students, Attendance, Timetables) |
+| **Styling**     | CSS, Flexbox, CSS Grid                          | Responsive Design & Layout Control |
+
+---
+
+## 📐 System Design Philosophy
+
+- **User-Centric Design:** Optimized for real students, not just academic demos.
+- **Minimal Steps:** All key functions accessible within 2–3 clicks.
+- **Visual Hierarchy:** Data is digestible at a glance through charts and structured layouts.
+- **Mobile-First:** Seamless experience on phones, tablets, and desktops.
+- **Nature-Based Theme:** Inspired by Malaysian landscapes to foster visual comfort.
+
+---
+
+## 📥 Setup Instructions (For Developers)
+
+1. **Clone the Repository**
+```bash
+git clone https://github.com/Ramilbey/attendance-check-app.git
