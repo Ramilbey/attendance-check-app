@@ -31,13 +31,13 @@ Instantly displays:
   - Name, Country, Email, Emergency Contact
   - Academic Details (Major, CGPA, Year of Study)
   - Clickable Major → Timetable Navigation
-    ![profile](client/public/profileInfor.jpg)
+  - ![profile](client/public/profileInfo.jpg)
 
 - 📅 **Digital Timetable + Calendar**
   - Dynamic, filterable weekly class schedule  
   - Calendar shows **only your academic batch** + relevant public holidays  
   - Clean, intuitive presentation unlike outdated PDF calendars
-   ![timetable](client/public/timetable.jpg)
+  - ![timetable](client/public/timtable.jpg)
 
 - 🌿 **Nature-Inspired UI Design**
   - Calm, vibrant colors (greens, blues, grays, yellows, reds)
