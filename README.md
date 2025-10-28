@@ -25,19 +25,19 @@ Instantly displays:
   - Percentage of attendance
   - **Interactive Pie Chart** (Present vs. Absent)
   - **Weekly Attendance Trend Bar Chart**
-  - [attendace](client/public/attendance.jpg)
+   ![attendace](client/public/attendance.jpg)
 
 - 👤 **Student Profile Page**
   - Name, Country, Email, Emergency Contact
   - Academic Details (Major, CGPA, Year of Study)
   - Clickable Major → Timetable Navigation
-  - [profile](client/public/profileInfor.jpg)
+    ![profile](client/public/profileInfor.jpg)
 
 - 📅 **Digital Timetable + Calendar**
   - Dynamic, filterable weekly class schedule  
   - Calendar shows **only your academic batch** + relevant public holidays  
   - Clean, intuitive presentation unlike outdated PDF calendars
-  - [timetable](client/public/timetable.jpg)
+   ![timetable](client/public/timetable.jpg)
 
 - 🌿 **Nature-Inspired UI Design**
   - Calm, vibrant colors (greens, blues, grays, yellows, reds)
